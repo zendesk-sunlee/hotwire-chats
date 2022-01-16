@@ -25,7 +25,8 @@ class ChatsController < ApplicationController
 
     respond_to do |format|
       if @chat.save
-        format.html { redirect_to chat_url(@chat), notice: "Chat was successfully created." }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("new_chat", partial: "chat_link")}
+        format.html { redirect_to @chat, notice: "Chat was successfully created." }
         format.json { render :show, status: :created, location: @chat }
       else
         format.html { render :new, status: :unprocessable_entity }
